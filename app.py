@@ -1,5 +1,9 @@
 import streamlit as st
 import googletrans as  gt
+import pyttsx3 as sp
+# make sure to apt install espeak
+
+
 
 
 
@@ -19,6 +23,8 @@ with st.sidebar:
 
 
 # creating the input box for writing
+    
+
 myText=st.text_area('')
 
 
@@ -32,12 +38,8 @@ st.selectbox('',myLanguages)
 resultText=myText
 
 
-
-
-
-
-
 translateBtn=st.button('Translate')
+
 
 def translate(myText):
     
@@ -72,10 +74,12 @@ if translateBtn:
 talkBtn=st.button('Talk')
 
 if talkBtn:
-    # implement the talk function using python sound
-    # st.markdown('this function will help to communicate...')
-    st.text('lets talk a bit...')
-
+    engine=sp.init()
+    # speech_speed=engine.getProperty('rate')
+    engine.setProperty('rate',140)
+    # st.write(speech_speed)
+    engine.say(resultText)
+    engine.runAndWait()
 
 
 
