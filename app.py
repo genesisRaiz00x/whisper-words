@@ -1,85 +1,118 @@
 import streamlit as st
-import googletrans as  gt
+from googletrans import Translator as gt
 import pyttsx3 as sp
 # make sure to apt install espeak
+# from gtts import gTTS 
 
 
 
 
 
+'''title declared '''
+st.header('W h i s p e r     W o r d s')
 
-st.header('w h i s p e r     w o r d s')
 
 
-
-# 
+'''side bar created here'''
 with st.sidebar:
     st.info(
         'this application is created for the basic purpose of eleminating the conversational barriers'
-        )
-    
+    )
 
 
-
-
-# creating the input box for writing
-    
-
-myText=st.text_area('')
+myText=st.text_area(label='')
 
 
 #declaring the list for the languages
-myLanguages=['select language','Marathi','Japanese','Korean','German','Russian']
-st.selectbox('',myLanguages)
+myLanguages=('Japanese','french','Russian','Korean','Indonesian','German','Hindi')
+lang=st.selectbox('select',myLanguages)
 
 
-#the outut set to the input string for now on 
-# must change it to the translated one 
-resultText=myText
 
-
-translateBtn=st.button('Translate')
-
+'''
+translation functionality implementation
+'''
 
 def translate(myText):
+
+    translated_text=myText
+    translator = gt()
+
+    if lang=='Japanese':
+            translated_text = translator.translate(myText, src='en', dest='ja')
+            return translated_text.text
+        
+
+      
+    if lang=='french':
+            translated_text = translator.translate(myText, src='en', dest='fr')
+            return translated_text.text
+
+   
+    if lang=='German':
+            translated_text = translator.translate(myText, src='en', dest='de')
+            return translated_text.text
+        
+ 
+        
+    if lang=='Indonesian':
+            translated_text = translator.translate(myText, src='en', dest='ja')
+            return translated_text.text
+        
+
+        
+    if lang=='Korean':
+            translated_text = translator.translate(myText, src='en', dest='ko')
+            return translated_text.text
+        
+        
+    if lang=='Russian':
+            translated_text = translator.translate(myText, src='en', dest='id')
+            return translated_text.text
     
-    # implement google translate library
+    if lang=='Hindi':
+            translated_text = translator.translate(myText, src='en', dest='hi')
+            return translated_text.text
+          
+        
+    else:
 
-    if myLanguages=='Marathi':
-        pass
-    if myLanguages=='Japanese':
-        pass
-    if myLanguages=='Korean':
-        pass
-    if myLanguages=='German':
-        pass
-    if myLanguages=='Russian':
-        pass
+            return 'please select a language'
+    
 
 
 
+'''
+implementing the text to speech functionality
+'''
+
+def speak(myText):
+      
+      st.write(myText)
+
+     
+translateBtn=st.button('Translate')
 
 if translateBtn:
+
     if myText=="":
-        pass
-    
 
-    # st.info(resultText)
+        
+        st.text(translate('Do not leave the text box empty')) 
+
+
     if myText!="":
-        st.text(resultText)
+       
+        
+        st.text(translate(myText))
 
-
-
-# implementing the talk function
-talkBtn=st.button('Talk')
-
-if talkBtn:
-    engine=sp.init()
-    # speech_speed=engine.getProperty('rate')
-    engine.setProperty('rate',140)
-    # st.write(speech_speed)
-    engine.say(resultText)
-    engine.runAndWait()
+'''
+to implement speech functionality its better to first declare the language codes in advance instead of
+declaring it in if statement in the function declaration'''
+speakBtn=st.button('Speak')
+if speakBtn:
+      
+      speak('this is speak functionality still needs better implementation.....')
 
 
 
